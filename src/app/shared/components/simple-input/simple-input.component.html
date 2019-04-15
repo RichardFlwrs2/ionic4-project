@@ -1,0 +1,14 @@
+<ion-item>
+  <!-- LABEL -->
+  <ion-label position="floating">{{ label }}</ion-label>
+
+  <!-- ERRORS -->
+  <div class="simple-input-errMsge" *ngFor="let validation of _fts.validation_messages.invalido">
+    <ion-label position="floating" *ngIf="campo.hasError(validation.type) && (campo.dirty || campo.touched)"
+      ><ion-text color="danger">{{ validation.message }}</ion-text></ion-label
+    >
+  </div>
+
+  <!-- INPUT -->
+  <ion-input [type]="type" [placeholder]="placeholder" [formControl]="campo"></ion-input>
+</ion-item>

@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
       this.loggedIn.next(true);
       return true;
     } else {
-      console.log("test");
+      console.log("bad, go back...");
 
       if (this.router.url !== "/login") {
         if (this.router.url !== "/") this.ngZone.runOutsideAngular(() => BootController.getbootControl().restart());

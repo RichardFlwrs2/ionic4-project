@@ -2,18 +2,17 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
 import { AppRoutingModule } from "./app-routing.module";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
 
 // Ionic
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 
-// Material
-import { MatButtonModule, MatCheckboxModule } from "@angular/material";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+
 
 import { AppComponent } from "./app.component";
-import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,11 +21,9 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatCheckboxModule
+    ReactiveFormsModule
   ],
 
   providers: [StatusBar, SplashScreen, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],

@@ -1,5 +1,10 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Livestat</ion-title>
+<ion-header no-border class="layout-header">
+  <ion-toolbar type="md">
+    <ion-title slot="start">Livestat</ion-title>
+
+    <ion-icon slot="end" class="icon-session-pic" (click)="openModal()" name="ios-contact"></ion-icon>
+    <!-- <ion-avatar>
+      <img [src]="image" />
+    </ion-avatar> -->
   </ion-toolbar>
 </ion-header>

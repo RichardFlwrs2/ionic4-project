@@ -1,0 +1,22 @@
+.showingData-wrapper {
+  padding: 5px 0px;
+  padding-left: 4px;
+}
+
+.input-inline-row {
+  display: flex !important;
+  align-items: center !important;
+
+  .showingData-wrapper {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    padding: 0;
+    text-align: right;
+  }
+
+  .simple-input-element {
+    float: right;
+  }
+}
+

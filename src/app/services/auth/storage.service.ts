@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Credential } from "../api/auth.service";
+import { Credential } from "../api/login.service";
 import { Router } from "@angular/router";
 
 @Injectable({
@@ -26,7 +26,26 @@ export class StorageService {
     return authToken ? authToken : null;
   }
 
+  setCurrentSession(session): void {
+    this.currentSession = session;
+    this.localStorageService.setItem("session-livestat", JSON.stringify(session));
+  }
+  setAuthToken(token): void {
+    this.authToken = token;
+    this.localStorageService.setItem("authToken", token);
+  }
+
   public isAuthenticated(): boolean {
     return this.loadSessionData() != null && this.loadAuthToken() != null ? true : false;
+  }
+
+  removeCurrentSession(): void {
+    this.localStorageService.removeItem("session-livestat");
+    this.localStorageService.removeItem("directorio");
+    this.localStorageService.removeItem("basePath");
+    this.currentSession = null;
+  }
+  removeAuthToken(): void {
+    this.localStorageService.removeItem("authToken");
   }
 }

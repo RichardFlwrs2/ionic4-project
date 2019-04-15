@@ -1,59 +1,64 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TabsPageComponent } from './tabs.page.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { TabsPageComponent } from "./tabs.page.component";
+import { AuthGuard } from "../services/guards/auth.guard";
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: "tabs",
     component: TabsPageComponent,
     children: [
       {
-        path: 'tareas',
+        path: "tareas",
+        canActivate: [AuthGuard],
         children: [
           {
-            path: '',
-            loadChildren: './tareas/tareas.module#TareasPageModule'
+            path: "",
+            loadChildren: "./tareas/tareas.module#TareasPageModule"
           }
         ]
       },
       {
-        path: 'apps',
+        path: "apps",
+        canActivate: [AuthGuard],
         children: [
           {
-            path: '',
-            loadChildren: './apps/apps.module#AppsPageModule'
+            path: "",
+            loadChildren: "./apps/apps.module#AppsPageModule"
           }
         ]
       },
       {
-        path: 'networking',
+        path: "networking",
+        canActivate: [AuthGuard],
         children: [
           {
-            path: '',
-            loadChildren: './networking/networking.module#NetworkingPageModule'
+            path: "",
+            loadChildren: "./networking/networking.module#NetworkingPageModule"
           }
         ]
       },
       {
-        path: 'team',
+        path: "team",
+        canActivate: [AuthGuard],
         children: [
           {
-            path: '',
-            loadChildren: './team/team.module#TeamPageModule'
+            path: "",
+            loadChildren: "./team/team.module#TeamPageModule"
           }
         ]
       },
       {
-        path: '',
-        redirectTo: '/tabs/tareas',
-        pathMatch: 'full'
+        path: "",
+        redirectTo: "/tabs/tareas",
+        pathMatch: "full"
       }
     ]
   },
   {
-    path: '',
-    redirectTo: '/tabs/tareas',
-    pathMatch: 'full'
+    path: "",
+    redirectTo: "/tabs/tareas",
+    pathMatch: "full"
   }
 ];
 
