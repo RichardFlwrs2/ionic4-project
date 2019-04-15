@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { TareasPage } from './tareas.page';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TareasService } from './tareas.service';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule,
   ],
+  providers: [TareasService],
   declarations: [TareasPage]
 })
 export class TareasPageModule {}
