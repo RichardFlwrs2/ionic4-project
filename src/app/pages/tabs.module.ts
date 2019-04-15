@@ -6,7 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 
 import { TabsPageRoutingModule } from './tabs.router.module';
 
-import { TabsPage } from './tabs.page';
+import { TabsPageComponent } from './tabs.page.component';
 
 @NgModule({
   imports: [
@@ -16,6 +16,6 @@ import { TabsPage } from './tabs.page';
     TabsPageRoutingModule,
     SharedModule
   ],
-  declarations: [TabsPage]
+  declarations: [TabsPageComponent]
 })
 export class TabsPageModule {}
