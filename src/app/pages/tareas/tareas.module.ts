@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { TareasPage } from './tareas.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TareasService } from './tareas.service';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     SharedModule,
+    FullCalendarModule
   ],
   providers: [TareasService],
   declarations: [TareasPage]

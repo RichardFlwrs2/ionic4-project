@@ -10,8 +10,9 @@ import { SimpleInputComponent } from "./components/simple-input/simple-input.com
 import { InfoRowComponent } from "./components/info-row/info-row.component";
 import { ImgPipe } from "./pipes/img.pipe";
 
+
 @NgModule({
-  declarations: [HeaderComponent, SimpleInputComponent, InfoRowComponent, ImgPipe],
+  declarations: [HeaderComponent, SimpleInputComponent, InfoRowComponent, ImgPipe ],
   exports: [
     // Modulos
     NgxMaskModule,
@@ -23,12 +24,6 @@ import { ImgPipe } from "./pipes/img.pipe";
     // Pipes
     ImgPipe
   ],
-  imports: [
-    CommonModule,
-    IonicModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgxMaskModule.forRoot()
-  ]
+  imports: [CommonModule, IonicModule, FormsModule, ReactiveFormsModule, NgxMaskModule.forRoot()]
 })
 export class SharedModule {}

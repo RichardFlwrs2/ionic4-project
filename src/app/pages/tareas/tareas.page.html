@@ -2,4 +2,16 @@
 
 <ion-content>
   <!-- <p>Tareas</p> -->
+  <full-calendar
+    *ngIf="options"
+    #fullcalendar
+    [editable]="true"
+    [events]="eventsModel"
+    [header]="options.header"
+    [customButtons]="options.customButtons"
+    (dateClick)="dateClick($event)"
+    (eventDragStop)="eventDragStop($event)"
+    [plugins]="options.plugins"
+    (eventClick)="eventClick($event)"
+  ></full-calendar>
 </ion-content>
