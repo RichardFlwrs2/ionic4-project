@@ -13,17 +13,23 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 
 
 import { AppComponent } from "./app.component";
+import { SessionInfoPage } from './shared/layout/session-info/session-info.page';
+import { NuevaEntidadComponent } from './shared/components/nueva-entidad/nueva-entidad.component';
+import { SessionInfoPageModule } from './shared/layout/session-info/session-info.module';
+import { NuevaEntidadPageModule } from './shared/components/nueva-entidad/nueva-entidad.module';
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
+  entryComponents: [SessionInfoPage, NuevaEntidadComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SessionInfoPageModule,
+    NuevaEntidadPageModule
   ],
 
   providers: [StatusBar, SplashScreen, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],

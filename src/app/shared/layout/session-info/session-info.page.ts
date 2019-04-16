@@ -15,8 +15,8 @@ export class SessionInfoPage implements OnInit {
   constructor(
     private _sts: StorageService,
     private modalCtrl: ModalController,
+    private _session: SessionService,
     private _logout: LogginService,
-    private _session: SessionService
   ) {
     this.session = this._sts.loadSessionData();
   }

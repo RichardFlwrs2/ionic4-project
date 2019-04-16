@@ -5,22 +5,24 @@ import { ToastController } from "@ionic/angular";
   providedIn: "root"
 })
 export class IonToastService {
-  constructor(public toastController: ToastController) {}
+  constructor(private toastController: ToastController) {}
 
   public async toast(message: string) {
     const toast = await this.toastController.create({
       message: message,
-      duration: 2000
+      duration: 2000,
+      cssClass: "text-center",
+      position: "bottom"
     });
     toast.present();
   }
 
-  public async toastWithOptions() {
+  public async toastWithOptions(message: string) {
     const toast = await this.toastController.create({
-      message: "Click to Close",
+      message: message,
       showCloseButton: true,
-      position: "top",
-      closeButtonText: "Done"
+      position: "middle",
+      closeButtonText: "Ok"
     });
     toast.present();
   }

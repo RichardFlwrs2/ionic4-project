@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ModalController } from "@ionic/angular";
-import { SessionInfoPage } from '../session-info/session-info.page';
+import { SessionInfoPage } from "../session-info/session-info.page";
 
 @Component({
   selector: "app-header",
@@ -17,8 +17,7 @@ export class HeaderComponent implements OnInit {
     const modal = await this.modalCtrl.create({
       component: SessionInfoPage,
       componentProps: {
-        nombre: "Ricardo",
-        test: "value2"
+        nombre: "Ricardo"
       }
     });
 
