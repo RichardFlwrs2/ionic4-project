@@ -1,22 +1,33 @@
-import { Component } from "@angular/core";
+import { Component, AfterViewInit } from "@angular/core";
 import { Validators, FormGroup, FormBuilder } from "@angular/forms";
 import { FormToolService } from "../services/tools/form-tools.service";
 import { LogginService } from "../services/api/login.service";
 import { SessionService } from "../services/auth/session.service";
+import { LoadingService } from "../services/tools/loading.service";
 
 @Component({
   selector: "app-login",
   templateUrl: "./login.page.html",
   styleUrls: ["./login.page.scss"]
 })
-export class LoginPage {
+export class LoginPage implements AfterViewInit {
   formLoggin: FormGroup;
 
-  constructor(public _fts: FormToolService, private fb: FormBuilder, private _login: LogginService, private _session: SessionService) {
+  constructor(
+    public _fts: FormToolService,
+    private fb: FormBuilder,
+    private _loading: LoadingService,
+    private _login: LogginService,
+    private _session: SessionService
+  ) {
     this.formLoggin = this.fb.group({
       email: ["", this._fts.validators("email")],
       password: ["", [Validators.required]]
     });
+  }
+
+  ngAfterViewInit() {
+    this._loading.trigger.next(false);
   }
 
   sendForm() {

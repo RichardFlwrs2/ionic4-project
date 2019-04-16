@@ -17,3 +17,10 @@
 
   margin-bottom: 2rem;
 }
+
+@media (min-width: 765px) {
+  .form-wrapper {
+    max-width: 416px;
+    margin: 0 auto;
+  }
+}
