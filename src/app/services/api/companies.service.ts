@@ -95,7 +95,6 @@ export class CompaniesService {
   // ---------------------------------------------------------------------------------------------------------------- //
   getDirection(empresa: any) {
     //
-    this._loading.trigger.next(true);
 
     let direccion = {
       nombre: "",

@@ -1,5 +1,11 @@
 <app-header></app-header>
 
 <ion-content>
+  <ion-list>
+    <ion-item *ngFor="let s of surveys">
+      <ion-icon slot="start" style="font-size: 2rem;" name="play"></ion-icon>
 
+      <ion-label>{{ s.nombre }} </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

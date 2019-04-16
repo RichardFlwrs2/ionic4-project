@@ -4,9 +4,10 @@ import { environment } from "../../../environments/environment";
 import { Subject } from "rxjs/Subject";
 import { map, catchError } from "rxjs/operators";
 import { ErrorsService } from "../messages/errors.service";
-import { IonToastService } from '../messages/ion-toast.service';
+import { IonToastService } from "../messages/ion-toast.service";
+import { LoadingService } from "../tools/loading.service";
 
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class SurveyService {
   private headers: HttpHeaders;
   public userDetail = "";
@@ -14,15 +15,8 @@ export class SurveyService {
   private basePath = environment.api;
   updateSurveys = new Subject<any>();
 
-  constructor(
-    private http: HttpClient,
-    private _err: ErrorsService,
-    private _msge: IonToastService
-  ) {
-    this.headers = new HttpHeaders().set(
-      "Authorization",
-      "Bearer " + localStorage.getItem("authToken")
-    );
+  constructor(private http: HttpClient, private _err: ErrorsService, private _msge: IonToastService, private _loading: LoadingService) {
+    this.headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("authToken"));
   }
 
   // ---------------------------------------------------------------------------------------------------------------- //
@@ -30,6 +24,7 @@ export class SurveyService {
   // ---------------------------------------------------------------------------------------------------------------- //
   getSurveyByOwner(idUsuario: string) {
     //
+    this._loading.trigger.next(true);
 
     return this.http
       .get(this.basePath + "survey/getSurveyByOwner", {
@@ -39,9 +34,13 @@ export class SurveyService {
         }
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          this._loading.trigger.next(false);
+          return res[0];
+        }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );
