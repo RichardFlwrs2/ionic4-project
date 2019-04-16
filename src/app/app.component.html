@@ -1,3 +1,7 @@
 <ion-app>
   <ion-router-outlet></ion-router-outlet>
 </ion-app>
+
+<div [class.hidden]="!_loading.state" class="loading_spiner_wrapper">
+  <ion-spinner name="crescent" color="primary" class="loading_spiner"></ion-spinner>
+</div>

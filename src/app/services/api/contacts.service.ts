@@ -7,6 +7,7 @@ import { ErrorsService } from "../messages/errors.service";
 import * as moment from "moment";
 import { IonToastService } from "../messages/ion-toast.service";
 import { ImgFilterService } from "../tools/img-filter.service";
+import { LoadingService } from "../tools/loading.service";
 
 @Injectable({ providedIn: "root" })
 export class ContactsService {
@@ -16,7 +17,13 @@ export class ContactsService {
 
   public newcontact = new Subject<any>();
 
-  constructor(private http: HttpClient, private _err: ErrorsService, private _msge: IonToastService, private _img: ImgFilterService) {
+  constructor(
+    private http: HttpClient,
+    private _err: ErrorsService,
+    private _msge: IonToastService,
+    private _img: ImgFilterService,
+    private _loading: LoadingService
+  ) {
     this.headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("authToken"));
 
     this.headers.append("Content-Type", "application/json");
@@ -30,6 +37,7 @@ export class ContactsService {
   // ---------------------------------------------------------------------------------------------------------------- //
   getContactosByOwner(idUsuario: string) {
     //
+    this._loading.trigger.next(true);
 
     return this.http
       .get<any>(this.basePath + "entidad/contacto/getContactosByOwner", {
@@ -43,10 +51,12 @@ export class ContactsService {
           res.forEach(e => {
             if (e.picture) e.pictureUrl = this._img.getUrlPic(e.picture, "contacto");
           });
+          this._loading.trigger.next(false);
           return res;
         }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );
@@ -59,6 +69,7 @@ export class ContactsService {
   // ---------------------------------------------------------------------------------------------------------------- //
   getContactoById(id) {
     //
+    this._loading.trigger.next(true);
 
     return this.http
       .get(this.basePath + "entidad/contacto/getContactoById", {
@@ -68,9 +79,13 @@ export class ContactsService {
         }
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          this._loading.trigger.next(false);
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );
@@ -165,6 +180,7 @@ export class ContactsService {
   // ---------------------------------------------------------------------------------------------------------------- //
   saveContacto(contacto, campos, idUsers, idGroups) {
     //
+    this._loading.trigger.next(true);
 
     return this.http
       .post(this.basePath + "entidad/contacto/saveContacto", [contacto, campos], {
@@ -175,9 +191,13 @@ export class ContactsService {
         }
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          this._loading.trigger.next(false);
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );
@@ -190,6 +210,7 @@ export class ContactsService {
   // ---------------------------------------------------------------------------------------------------------------- //
   updateContacto(contacto) {
     //
+    this._loading.trigger.next(true);
 
     console.log(contacto);
     return this.http
@@ -197,9 +218,13 @@ export class ContactsService {
         headers: this.headers
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          this._loading.trigger.next(false);
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );
@@ -212,6 +237,7 @@ export class ContactsService {
   // ---------------------------------------------------------------------------------------------------------------- //
   deleteContactoById(id: string) {
     //
+    this._loading.trigger.next(true);
 
     return this.http
       .delete(this.basePath + "entidad/contacto/deleteContactoById", {
@@ -221,7 +247,9 @@ export class ContactsService {
         }
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
           throw new Error("Error al hacer la consulta http");
@@ -236,6 +264,7 @@ export class ContactsService {
   // ---------------------------------------------------------------------------------------------------------------- //
   getSurveyTemplatesByEntidad(idEntidad: String) {
     //
+    this._loading.trigger.next(true);
 
     return this.http
       .get(this.basePath + "survey/getSurveyTemplatesByEntidad", {
@@ -245,9 +274,13 @@ export class ContactsService {
         }
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          this._loading.trigger.next(false);
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );

@@ -6,6 +6,7 @@ import { map, catchError } from "rxjs/operators";
 import { ErrorsService } from "../messages/errors.service";
 import { IonToastService } from "../messages/ion-toast.service";
 import { ImgFilterService } from "../tools/img-filter.service";
+import { LoadingService } from "../tools/loading.service";
 
 @Injectable({ providedIn: "root" })
 export class CompaniesService {
@@ -13,7 +14,13 @@ export class CompaniesService {
   private basePath = environment.api;
   newcompany = new Subject<any>();
 
-  constructor(private http: HttpClient, private _err: ErrorsService, private _msge: IonToastService, private _img: ImgFilterService) {
+  constructor(
+    private http: HttpClient,
+    private _err: ErrorsService,
+    private _msge: IonToastService,
+    private _img: ImgFilterService,
+    private _loading: LoadingService
+  ) {
     this.headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("authToken"));
     this.headers.append("Content-Type", "application/json");
     this.headers.append("Access-Control-Allow-Headers", "Content-Type");
@@ -27,6 +34,7 @@ export class CompaniesService {
   // ---------------------------------------------------------------------------------------------------------------- //
   getEmpresasByOwner(idUsuario: string) {
     //
+    this._loading.trigger.next(true);
 
     return this.http
       .get<any>(this.basePath + "entidad/empresa/getEmpresasByOwner", {
@@ -40,10 +48,12 @@ export class CompaniesService {
           res.forEach(e => {
             if (e.picture) e.pictureUrl = this._img.getUrlPic(e.picture, "contacto");
           });
+          this._loading.trigger.next(false);
           return res;
         }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );
@@ -56,6 +66,7 @@ export class CompaniesService {
   // ---------------------------------------------------------------------------------------------------------------- //
   getEmpresaById(idEmpresa: string) {
     //
+    this._loading.trigger.next(true);
 
     return this.http
       .get(this.basePath + "entidad/empresa/getEmpresaById", {
@@ -65,9 +76,13 @@ export class CompaniesService {
         }
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          this._loading.trigger.next(false);
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );
@@ -80,6 +95,7 @@ export class CompaniesService {
   // ---------------------------------------------------------------------------------------------------------------- //
   getDirection(empresa: any) {
     //
+    this._loading.trigger.next(true);
 
     let direccion = {
       nombre: "",
@@ -108,6 +124,7 @@ export class CompaniesService {
   // ---------------------------------------------------------------------------------------------------------------- //
   createEmpresa(empresa, sharedWith, idUsuario) {
     //
+    this._loading.trigger.next(true);
 
     const ENTIDAD = {
       nombre: empresa.nombre,
@@ -126,9 +143,13 @@ export class CompaniesService {
     const idUsers = sharedWith.usuarios.join(", ");
     const idGroups = sharedWith.grupos.join(", ");
     return this.saveEmpresa(COMPANY, idUsers, idGroups).pipe(
-      map(res => res),
+      map(res => {
+        this._loading.trigger.next(false);
+        return res;
+      }),
       catchError(err => {
         this._err.manageError(err);
+        this._loading.trigger.next(false);
         throw new Error("Error al hacer la consulta http");
       })
     );
@@ -141,6 +162,7 @@ export class CompaniesService {
   // ---------------------------------------------------------------------------------------------------------------- //
   saveEmpresa(company, idUsers, idGroups) {
     //
+    this._loading.trigger.next(true);
 
     console.log(company);
 
@@ -153,9 +175,13 @@ export class CompaniesService {
         }
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          this._loading.trigger.next(false);
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );
@@ -168,6 +194,7 @@ export class CompaniesService {
   // ---------------------------------------------------------------------------------------------------------------- //
   getContactosByEmpresa(idUsuario: string) {
     //
+    this._loading.trigger.next(true);
 
     return this.http
       .get(this.basePath + "entidad/empresa/getContactosByEmpresa", {
@@ -177,9 +204,13 @@ export class CompaniesService {
         }
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          this._loading.trigger.next(false);
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );
@@ -192,6 +223,7 @@ export class CompaniesService {
   // ---------------------------------------------------------------------------------------------------------------- //
   updateCompanie(empresa) {
     //
+    this._loading.trigger.next(true);
 
     console.log(empresa);
     return this.http
@@ -199,9 +231,13 @@ export class CompaniesService {
         headers: this.headers
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          this._loading.trigger.next(false);
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );
@@ -214,6 +250,7 @@ export class CompaniesService {
   // ---------------------------------------------------------------------------------------------------------------- //
   deleteCompanieById(idEmpresa: string) {
     //
+    this._loading.trigger.next(true);
 
     return this.http
       .delete(this.basePath + "entidad/empresa/deleteEmpresaById", {
@@ -223,9 +260,13 @@ export class CompaniesService {
         }
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          this._loading.trigger.next(false);
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );

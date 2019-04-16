@@ -1,8 +1,36 @@
-<ion-header no-border>
+<ion-header no-border class="border-header">
   <ion-toolbar>
     <ion-title>Creacion de {{ tipo }}</ion-title>
     <ion-icon slot="end" class="icon-header-close" (click)="closeModal()" name="close"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
-<ion-content> </ion-content>
+<ion-content>
+  <form [formGroup]="newEntityForm">
+    <!-- Username -->
+    <simple-input
+      *ngIf="tipo === 'usuario'"
+      label="Username:"
+      placeholder="Escribe un username"
+      [campo]="newEntityForm.get('username')"
+      type="text"
+    ></simple-input>
+
+    <!-- Username -->
+    <simple-input
+      *ngIf="tipo !== 'any'"
+      label="Nombre:"
+      placeholder="Escribe un nombre para el usuario"
+      [campo]="newEntityForm.get('nombre')"
+      type="text"
+    ></simple-input>
+
+    <!-- <ion-button class="btn-md" type="submit">Guardar</ion-button> -->
+  </form>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button (click)="sendForm()" class="btn-md" type="submit">Guardar</ion-button>
+  </ion-toolbar>
+</ion-footer>

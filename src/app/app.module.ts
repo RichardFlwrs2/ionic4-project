@@ -17,6 +17,7 @@ import { SessionInfoPage } from './shared/layout/session-info/session-info.page'
 import { NuevaEntidadComponent } from './shared/components/nueva-entidad/nueva-entidad.component';
 import { SessionInfoPageModule } from './shared/layout/session-info/session-info.module';
 import { NuevaEntidadPageModule } from './shared/components/nueva-entidad/nueva-entidad.module';
+import { LoadingService } from './services/tools/loading.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,7 +33,7 @@ import { NuevaEntidadPageModule } from './shared/components/nueva-entidad/nueva-
     NuevaEntidadPageModule
   ],
 
-  providers: [StatusBar, SplashScreen, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [StatusBar, SplashScreen, LoadingService, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

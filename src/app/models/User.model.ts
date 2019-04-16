@@ -3,21 +3,19 @@ import { Entidad } from "../interfaces/Entidad";
 
 export class User {
   // Properties
-  public username: string;
-  public password: string;
-  public tipoUsuario?: {
-    idTipoUsuario: number; // 1:Admin 2:Intermedio 3:Basico
+  public username: string = null;
+  public password: string = null;
+  public tipoUsuario = { idTipoUsuario: 3 }; // 1:Admin 2:Intermedio 3:Basico
+  public userRole = {
+    idRole: 3,
+    nombre: "Basico"
   };
-  public userRole?: {
-    idRole: number;
-    nombre: string;
-  };
-  public idUsuario?: number;
-  public Survey?: Survey[];
+  public idUsuario?: number = null;
+  public Survey?: Survey[] = [];
   // ENTIDAD
-  public idEntidad?: number;
-  public entidad?: Entidad;
-  public picture?: string;
+  public idEntidad?: number = null;
+  public entidad?: Entidad = null;
+  public picture?: string = null;
 
   constructor(data: any) {
     //

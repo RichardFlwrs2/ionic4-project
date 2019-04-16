@@ -10,6 +10,7 @@ import { map, catchError } from "rxjs/operators";
 import { ErrorsService } from "../messages/errors.service";
 import { IonToastService } from "../messages/ion-toast.service";
 import { ImgFilterService } from "../tools/img-filter.service";
+import { LoadingService } from "../tools/loading.service";
 
 @Injectable({ providedIn: "root" })
 export class UsuariosService {
@@ -23,7 +24,8 @@ export class UsuariosService {
     private http: HttpClient,
     private _err: ErrorsService,
     private _msge: IonToastService,
-    private _img: ImgFilterService
+    private _img: ImgFilterService,
+    private _loading: LoadingService
   ) {
     this.headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("authToken"));
     this.headers.append("Content-Type", "application/json");
@@ -41,6 +43,7 @@ export class UsuariosService {
   // ---------------------------------------------------------------------------------------------------------------- //
   getUsersByOwner(idUsuario: string) {
     //
+    this._loading.trigger.next(true);
 
     return this.http
       .get(this.basePath + "usuario/getUsuariosByOwner", {
@@ -57,12 +60,14 @@ export class UsuariosService {
             user.isSelected = false;
             if (user.picture) user.pictureUrl = this._img.getUrlPic(user.picture, "usuario");
           });
+          this._loading.trigger.next(false);
           return res;
 
           //
         }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );
@@ -75,6 +80,7 @@ export class UsuariosService {
   // ---------------------------------------------------------------------------------------------------------------- //
   getUserById(id: string) {
     //
+    this._loading.trigger.next(true);
 
     return this.http
       .get(this.basePath + "usuario/getUsuarioById", {
@@ -84,9 +90,13 @@ export class UsuariosService {
         }
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          this._loading.trigger.next(false);
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );
@@ -151,6 +161,7 @@ export class UsuariosService {
   // ---------------------------------------------------------------------------------------------------------------- //
   createUser(idUsuario: string, idSurveys: string, idGroups: string, usuario: any) {
     //
+    this._loading.trigger.next(true);
 
     return this.http
       .post(this.basePath + "usuario/saveUsuario", usuario, {
@@ -165,8 +176,12 @@ export class UsuariosService {
         data => {
           this._msge.toast("Usuario creado con exito");
           this.newUser.next();
+          this._loading.trigger.next(false);
         },
-        error => this._err.manageError(error)
+        error => {
+          this._loading.trigger.next(false);
+          this._err.manageError(error);
+        }
       );
 
     //
@@ -177,15 +192,20 @@ export class UsuariosService {
   // ---------------------------------------------------------------------------------------------------------------- //
   updateUser(user: any) {
     //
+    this._loading.trigger.next(true);
 
     return this.http
       .put(this.basePath + "usuario/updateUsuario", user, {
         headers: this.headers
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          this._loading.trigger.next(false);
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );
@@ -198,6 +218,7 @@ export class UsuariosService {
   // ---------------------------------------------------------------------------------------------------------------- //
   deleteUser(id: string) {
     //
+    this._loading.trigger.next(true);
 
     this.http
       .delete(this.basePath + "usuario/deleteUsuarioById", {
@@ -209,9 +230,11 @@ export class UsuariosService {
       .subscribe(
         data => {
           // console.log(data);
+          this._loading.trigger.next(false);
           this.router.navigate(["/team"]);
         },
         error => {
+          this._loading.trigger.next(false);
           console.log(error);
         }
       );
@@ -228,6 +251,7 @@ export class UsuariosService {
   // ---------------------------------------------------------------------------------------------------------------- //
   createGrupo(grupo: Grupo, imageFile?: any) {
     //
+    this._loading.trigger.next(true);
 
     const fd: FormData = new FormData();
     fd.append("imageFile", imageFile);
@@ -236,9 +260,13 @@ export class UsuariosService {
         headers: this.headers
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          this._loading.trigger.next(false);
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );
@@ -251,6 +279,7 @@ export class UsuariosService {
   // ---------------------------------------------------------------------------------------------------------------- //
   getGruposByOwner(idUsuario: string) {
     //
+    this._loading.trigger.next(true);
 
     return this.http
       .get(this.basePath + "usuario/grupo/getGruposByOwner", {
@@ -260,9 +289,13 @@ export class UsuariosService {
         }
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          this._loading.trigger.next(false);
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );
@@ -275,6 +308,7 @@ export class UsuariosService {
   // ---------------------------------------------------------------------------------------------------------------- //
   getGruposByUsuario(idUsuario: string) {
     //
+    this._loading.trigger.next(true);
 
     return this.http
       .get(this.basePath + "usuario/grupo/getGruposByUsuario", {
@@ -284,9 +318,13 @@ export class UsuariosService {
         }
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          this._loading.trigger.next(false);
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );
@@ -299,6 +337,7 @@ export class UsuariosService {
   // ---------------------------------------------------------------------------------------------------------------- //
   editarGrupo(grupo: Grupo, option: string) {
     //
+    this._loading.trigger.next(true);
 
     let query: string;
     if (option === "add") query = "usuario/grupo/addUsuariosToGrupo";
@@ -313,9 +352,13 @@ export class UsuariosService {
         }
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          this._loading.trigger.next(false);
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );
@@ -328,6 +371,7 @@ export class UsuariosService {
   // ---------------------------------------------------------------------------------------------------------------- //
   updateGroupName(grupoId: number, nombre: string) {
     //
+    this._loading.trigger.next(true);
 
     return this.http
       .put(this.basePath + "usuario/grupo/updateGrupoName", nombre, {
@@ -338,9 +382,13 @@ export class UsuariosService {
         }
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          this._loading.trigger.next(false);
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );
@@ -353,6 +401,7 @@ export class UsuariosService {
   // ---------------------------------------------------------------------------------------------------------------- //
   borrarGrupo(grupo: Grupo) {
     //
+    this._loading.trigger.next(true);
 
     return this.http
       .delete(this.basePath + "usuario/grupo/deleteGrupoUsuario", {
@@ -362,9 +411,13 @@ export class UsuariosService {
         }
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          this._loading.trigger.next(false);
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
+          this._loading.trigger.next(false);
           throw new Error("Error al hacer la consulta http");
         })
       );

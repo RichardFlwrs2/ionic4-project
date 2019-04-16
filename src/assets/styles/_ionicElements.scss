@@ -7,3 +7,29 @@
     height: 2.8rem;
   }
 }
+
+// ------------------------
+// - ION BUTTON
+// ------------------------
+ion-button.btn-md {
+  width: 100%;
+  padding: 0 2rem;
+}
+
+// ------------------------
+// - ION SPINER
+// ------------------------
+.loading_spiner_wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.22);
+
+  .loading_spiner {
+    width: 4rem;
+    height: 4rem;
+  }
+}
