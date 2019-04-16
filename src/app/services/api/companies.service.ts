@@ -4,23 +4,17 @@ import { Subject } from "rxjs/Subject";
 import { environment } from "../../../environments/environment";
 import { map, catchError } from "rxjs/operators";
 import { ErrorsService } from "../messages/errors.service";
-import { IonToastService } from '../messages/ion-toast.service';
+import { IonToastService } from "../messages/ion-toast.service";
+import { ImgFilterService } from "../tools/img-filter.service";
 
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class CompaniesService {
   private headers: HttpHeaders;
   private basePath = environment.api;
   newcompany = new Subject<any>();
 
-  constructor(
-    private http: HttpClient,
-    private _err: ErrorsService,
-    private _msge: IonToastService
-  ) {
-    this.headers = new HttpHeaders().set(
-      "Authorization",
-      "Bearer " + localStorage.getItem("authToken")
-    );
+  constructor(private http: HttpClient, private _err: ErrorsService, private _msge: IonToastService, private _img: ImgFilterService) {
+    this.headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("authToken"));
     this.headers.append("Content-Type", "application/json");
     this.headers.append("Access-Control-Allow-Headers", "Content-Type");
     this.headers.append("Access-Control-Allow-Methods", "POST");
@@ -42,7 +36,12 @@ export class CompaniesService {
         }
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          res.forEach(e => {
+            if (e.picture) e.pictureUrl = this._img.getUrlPic(e.picture, "contacto");
+          });
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
           throw new Error("Error al hacer la consulta http");
@@ -94,15 +93,7 @@ export class CompaniesService {
 
     if (empresa.manualDir) {
       direccion.nombre =
-        empresa.calle +
-        ", " +
-        empresa.colonia +
-        ", " +
-        empresa.codigopostal +
-        ", " +
-        empresa.ciudad +
-        ", " +
-        empresa.estado;
+        empresa.calle + ", " + empresa.colonia + ", " + empresa.codigopostal + ", " + empresa.ciudad + ", " + empresa.estado;
     } else {
       direccion = empresa.direccion;
     }

@@ -5,9 +5,10 @@ import { Subject } from "rxjs/Subject";
 import { map, catchError } from "rxjs/operators";
 import { ErrorsService } from "../messages/errors.service";
 import * as moment from "moment";
-import { IonToastService } from '../messages/ion-toast.service';
+import { IonToastService } from "../messages/ion-toast.service";
+import { ImgFilterService } from "../tools/img-filter.service";
 
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class ContactsService {
   private headers: HttpHeaders;
   public contacts;
@@ -15,15 +16,8 @@ export class ContactsService {
 
   public newcontact = new Subject<any>();
 
-  constructor(
-    private http: HttpClient,
-    private _err: ErrorsService,
-    private _msge: IonToastService
-  ) {
-    this.headers = new HttpHeaders().set(
-      "Authorization",
-      "Bearer " + localStorage.getItem("authToken")
-    );
+  constructor(private http: HttpClient, private _err: ErrorsService, private _msge: IonToastService, private _img: ImgFilterService) {
+    this.headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("authToken"));
 
     this.headers.append("Content-Type", "application/json");
     this.headers.append("Access-Control-Allow-Headers", "Content-Type");
@@ -45,7 +39,12 @@ export class ContactsService {
         }
       })
       .pipe(
-        map(res => res),
+        map(res => {
+          res.forEach(e => {
+            if (e.picture) e.pictureUrl = this._img.getUrlPic(e.picture, "contacto");
+          });
+          return res;
+        }),
         catchError(err => {
           this._err.manageError(err);
           throw new Error("Error al hacer la consulta http");
@@ -134,14 +133,7 @@ export class ContactsService {
     };
 
     // ENTIDAD
-    const ENTIDAD = this.generateEntidad(
-      formData.nombre,
-      CONTACT_EMAIL,
-      CONTACT_PHONE,
-      USER_STATUS,
-      idUsuario,
-      3
-    );
+    const ENTIDAD = this.generateEntidad(formData.nombre, CONTACT_EMAIL, CONTACT_PHONE, USER_STATUS, idUsuario, 3);
 
     // ENTIDAD DE COMPAÑÍA
     if (formData.compañia) {

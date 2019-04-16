@@ -42,5 +42,7 @@ export interface UsuarioGpList {
   nombre: string;
   idUsuario: number;
   isSelected?: boolean;
+  telefonos: string;
   picture?: string;
+  pictureUrl?: string;
 }

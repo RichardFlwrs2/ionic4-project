@@ -1,5 +1,25 @@
 <app-header></app-header>
 
 <ion-content>
+  <!-- Default Segment -->
+  <ion-segment (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="contacts">
+      <ion-label>Contactos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="companies">
+      <ion-label>Empresas</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
+  <div *ngIf="segment.value === 'contacts'">
+    <div *ngFor="let c of contacts">
+      <app-info-row [entity]="c"></app-info-row>
+    </div>
+  </div>
+
+  <div *ngIf="segment.value === 'companies'">
+    <div *ngFor="let c of companies">
+      <app-info-row [entity]="c"></app-info-row>
+    </div>
+  </div>
 </ion-content>

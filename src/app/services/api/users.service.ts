@@ -3,14 +3,15 @@ import { Router } from "@angular/router";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { Subject } from "rxjs/Subject";
-import { UserForm, Usuario } from "../../interfaces/Usuario";
+import { UserForm, Usuario, UsuarioGpList } from "../../interfaces/Usuario";
 import { Entidad } from "../../interfaces/Entidad";
 import { Grupo } from "../../interfaces/UserGroups";
 import { map, catchError } from "rxjs/operators";
 import { ErrorsService } from "../messages/errors.service";
-import { IonToastService } from '../messages/ion-toast.service';
+import { IonToastService } from "../messages/ion-toast.service";
+import { ImgFilterService } from "../tools/img-filter.service";
 
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class UsuariosService {
   private headers: HttpHeaders;
   private basePath = environment.api;
@@ -21,12 +22,10 @@ export class UsuariosService {
     private router: Router,
     private http: HttpClient,
     private _err: ErrorsService,
-    private _msge: IonToastService
+    private _msge: IonToastService,
+    private _img: ImgFilterService
   ) {
-    this.headers = new HttpHeaders().set(
-      "Authorization",
-      "Bearer " + localStorage.getItem("authToken")
-    );
+    this.headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("authToken"));
     this.headers.append("Content-Type", "application/json");
     this.headers.append("Access-Control-Allow-Headers", "Content-Type");
     this.headers.append("Access-Control-Allow-Methods", "POST");
@@ -54,7 +53,10 @@ export class UsuariosService {
         map((res: any[]) => {
           // Se le agrega la propiedad isSelected para validar cuando se creen grupos
 
-          res.forEach(user => (user.isSelected = false));
+          res.forEach((user: UsuarioGpList) => {
+            user.isSelected = false;
+            if (user.picture) user.pictureUrl = this._img.getUrlPic(user.picture, "usuario");
+          });
           return res;
 
           //
