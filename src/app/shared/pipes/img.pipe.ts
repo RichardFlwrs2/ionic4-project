@@ -5,11 +5,7 @@ import { StorageService } from "src/app/services/auth/storage.service";
   name: "img"
 })
 export class ImgPipe implements PipeTransform {
-  session = this._sts.loadSessionData();
-
-  constructor(private _sts: StorageService) {
-    console.log(this.session);
-  }
+  constructor(private _sts: StorageService) {}
 
   transform(ITEMS: any[], TEXT: string): any {
     if (!ITEMS) return [];

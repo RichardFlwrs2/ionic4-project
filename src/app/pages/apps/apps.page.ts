@@ -9,11 +9,10 @@ import { StorageService } from "src/app/services/auth/storage.service";
   styleUrls: ["./apps.page.scss"]
 })
 export class AppsPage implements OnInit {
-  session = this._sts.loadSessionData();
   surveys: Survey[] = [];
 
   constructor(private _surveyS: SurveyService, private _sts: StorageService) {
-    this._surveyS.getSurveyByOwner(this.session.idUsuario).subscribe((res: any) => {
+    this._surveyS.getSurveyByOwner(this._sts.session.idUsuario).subscribe((res: any) => {
       console.log(res);
       this.surveys = res;
     });

@@ -10,16 +10,12 @@ import { SessionService } from "src/app/services/auth/session.service";
   styleUrls: ["./session-info.page.scss"]
 })
 export class SessionInfoPage implements OnInit {
-  session: Credential;
-
   constructor(
     private _sts: StorageService,
     private modalCtrl: ModalController,
     private _session: SessionService,
-    private _logout: LogginService,
-  ) {
-    this.session = this._sts.loadSessionData();
-  }
+    private _logout: LogginService
+  ) {}
 
   closeModal() {
     this.modalCtrl.dismiss();

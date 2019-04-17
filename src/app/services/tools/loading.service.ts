@@ -5,7 +5,6 @@ import { Subject } from "rxjs/Subject";
 
 @Injectable()
 export class LoadingService implements OnDestroy {
-  session = this._sts.loadSessionData();
 
   // Observer
   public trigger = new Subject<boolean>();

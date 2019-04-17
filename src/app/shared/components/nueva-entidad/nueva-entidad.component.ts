@@ -14,7 +14,6 @@ import { environment } from "src/environments/environment";
 })
 export class NuevaEntidadComponent implements OnInit {
   @Input() tipo: string;
-  session: Credential = this._sts.loadSessionData();
   newEntityForm: FormGroup = new FormGroup({});
   d: boolean = environment.production;
 

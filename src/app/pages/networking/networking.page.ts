@@ -11,9 +11,6 @@ import { Credential } from "src/app/services/api/login.service";
   styleUrls: ["./networking.page.scss"]
 })
 export class NetworkingPage implements OnInit {
-  // Session
-  session: Credential = this._sts.loadSessionData();
-
   companies: any[] = [];
   contacts: any[] = [];
 
@@ -29,14 +26,14 @@ export class NetworkingPage implements OnInit {
   }
 
   getCompanies() {
-    this._companieS.getEmpresasByOwner(this.session.idUsuario).subscribe(res => {
+    this._companieS.getEmpresasByOwner(this._sts.session.idUsuario).subscribe(res => {
       console.log(res);
       this.companies = res;
     });
   }
 
   getContacts() {
-    this._contactS.getContactosByOwner(this.session.idUsuario).subscribe(res => {
+    this._contactS.getContactosByOwner(this._sts.session.idUsuario).subscribe(res => {
       console.log(res);
       this.contacts = res;
     });

@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Credential } from "../api/login.service";
+import { Storage } from "@ionic/storage";
 import { Router } from "@angular/router";
 
 @Injectable({
@@ -7,45 +8,54 @@ import { Router } from "@angular/router";
 })
 export class StorageService {
   private localStorageService;
-  private currentSession = null;
+  public session = null;
   private authToken = null;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private storage: Storage) {
     this.localStorageService = localStorage;
-    this.currentSession = this.loadSessionData();
+    this.loadSessionData();
     this.authToken = this.loadAuthToken();
   }
 
-  loadSessionData(): Credential {
-    const sessionStr = this.localStorageService.getItem("session-livestat");
-    return sessionStr ? JSON.parse(sessionStr) : null;
+  async loadSessionData() {
+    const res = await this.storage.get("session-livestat");
+    this.session = res;
   }
 
   loadAuthToken() {
     const authToken = this.localStorageService.getItem("authToken");
+
+    this.storage.get("authToken").then(token => {
+      // console.log(token);
+    });
+
     return authToken ? authToken : null;
   }
 
   setCurrentSession(session): void {
-    this.currentSession = session;
+    this.session = session;
+    this.storage.set("session-livestat", session);
     this.localStorageService.setItem("session-livestat", JSON.stringify(session));
   }
   setAuthToken(token): void {
     this.authToken = token;
+    this.storage.set("authToken", token);
     this.localStorageService.setItem("authToken", token);
   }
 
   public isAuthenticated(): boolean {
-    return this.loadSessionData() != null && this.loadAuthToken() != null ? true : false;
+    return this.session != null && this.loadAuthToken() != null ? true : false;
   }
 
   removeCurrentSession(): void {
+    this.storage.remove("session-livestat");
     this.localStorageService.removeItem("session-livestat");
-    this.localStorageService.removeItem("directorio");
-    this.localStorageService.removeItem("basePath");
-    this.currentSession = null;
+    this.session = null;
   }
+
   removeAuthToken(): void {
+    this.storage.remove("authToken");
     this.localStorageService.removeItem("authToken");
+    this.authToken = null;
   }
 }

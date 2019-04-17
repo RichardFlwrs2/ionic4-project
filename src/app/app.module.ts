@@ -8,6 +8,7 @@ import { HttpClientModule } from "@angular/common/http";
 // Ionic
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { IonicStorageModule } from '@ionic/storage';
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 
 
@@ -25,6 +26,7 @@ import { LoadingService } from './services/tools/loading.service';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    IonicStorageModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
     FormsModule,

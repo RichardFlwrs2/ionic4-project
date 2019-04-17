@@ -18,13 +18,12 @@ export class TareasPage implements OnInit {
   // ---------------------------------------------------------------------------------------------------------------- //
   // * ---| Properties
   // ---------------------------------------------------------------------------------------------------------------- //
-  session = this._sts.loadSessionData();
   tareas: any[] = [];
   options: OptionsInput = calendarOptions;
 
   @ViewChild(IonSegment) segment: IonSegment;
 
-  constructor(private _sts: StorageService, private _tareaCtrl: TareasService, private _taskS: TaskService) {}
+  constructor(public _sts: StorageService, private _tareaCtrl: TareasService, private _taskS: TaskService) {}
 
   // ---------------------------------------------------------------------------------------------------------------- //
   // * ---| Init Calendar and getting data
@@ -33,7 +32,7 @@ export class TareasPage implements OnInit {
   ngOnInit() {
     this.segment.value = "calendario";
 
-    this._taskS.getTaskByIdUser(this.session.idUsuario).subscribe((res: any) => {
+    this._taskS.getTaskByIdUser(this._sts.session.idUsuario).subscribe((res: any) => {
       console.log(res);
       this.tareas = this.fillEvents(res);
       // this.options = this._tareaCtrl.getCalendarOptions(res);

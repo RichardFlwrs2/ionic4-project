@@ -12,12 +12,10 @@ import { ModalController } from "@ionic/angular";
   styleUrls: ["./team.page.scss"]
 })
 export class TeamPage implements OnInit {
-  session: Credential = this._sts.loadSessionData();
-
   users: UsuarioGpList[] = [];
 
   constructor(private _users: UsuariosService, private _sts: StorageService, private modalCtrl: ModalController) {
-    this._users.getUsersByOwner(this.session.idUsuario).subscribe(res => {
+    this._users.getUsersByOwner(this._sts.session.idUsuario).subscribe(res => {
       console.log(res);
       this.users = res;
     });

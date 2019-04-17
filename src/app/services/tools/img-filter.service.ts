@@ -7,11 +7,10 @@ import { StorageService } from "../auth/storage.service";
   providedIn: "root"
 })
 export class ImgFilterService {
-  session = this._sts.loadSessionData();
   directorio: string;
 
   constructor(public _sts: StorageService) {
-    this.directorio = this.session.dir;
+    this.directorio = this._sts.session.dir;
   }
 
   getUrlPic(pictureUrl: string, type: "contacto" | "usuario" | "empresa" | "grupo"): string {
