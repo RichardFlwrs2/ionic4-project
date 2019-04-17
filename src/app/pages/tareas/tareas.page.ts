@@ -5,6 +5,7 @@ import { TaskService } from "src/app/services/api/tasks.service";
 
 import { OptionsInput } from "@fullcalendar/core";
 import { FullCalendarComponent } from "@fullcalendar/angular";
+import { calendarOptions } from "./calendar-options";
 
 @Component({
   selector: "app-tareas",
@@ -14,7 +15,7 @@ import { FullCalendarComponent } from "@fullcalendar/angular";
 export class TareasPage implements OnInit {
   session = this._sts.loadSessionData();
   tareas: any[] = [];
-  options: OptionsInput;
+  options: OptionsInput = calendarOptions;
   eventsModel: any;
 
   constructor(private _sts: StorageService, private _tareaCtrl: TareasService, private _taskS: TaskService) {}
@@ -25,7 +26,7 @@ export class TareasPage implements OnInit {
     this._taskS.getTaskByIdUser(this.session.idUsuario).subscribe((res: any) => {
       console.log(res);
       this.tareas = res;
-      this.options = this._tareaCtrl.getCalendarOptions(res);
+      // this.options = this._tareaCtrl.getCalendarOptions(res);
     });
   }
   eventClick(model) {
@@ -35,39 +36,6 @@ export class TareasPage implements OnInit {
     console.log(model);
   }
   dateClick(model) {
-    console.log(model);
+    // console.log(model);
   }
-  updateHeader() {
-    this.options.header = {
-      left: "prev,next myCustomButton",
-      center: "title",
-      right: ""
-    };
-  }
-  updateEvents() {
-    this.eventsModel = [
-      {
-        title: "Updaten Event",
-        start: this.yearMonth + "-08",
-        end: this.yearMonth + "-10"
-      }
-    ];
-  }
-  get yearMonth(): string {
-    const dateObj = new Date();
-    return dateObj.getUTCFullYear() + "-" + (dateObj.getUTCMonth() + 1);
-  }
-
-  // ngOnInit() {
-  //   this._taskS.getTaskByIdUser(this.session.idUsuario).subscribe((res: any) => {
-  //     console.log(res);
-  //     this.tareas = res;
-  //     this.calendarOptions = this._tareaCtrl.getCalendarOptions(res);
-  //   });
-
-  // }
-
-  // onCalendarInit(event) {
-  //   console.log(event);
-  // }
 }

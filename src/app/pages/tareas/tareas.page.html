@@ -5,13 +5,18 @@
   <full-calendar
     *ngIf="options"
     #fullcalendar
+    [locale]="options.locale"
     [editable]="true"
     [events]="eventsModel"
+    [height]="options.height"
+    [buttonText]="options.buttonText"
+    [timeZone]="options.timeZone"
     [header]="options.header"
-    [customButtons]="options.customButtons"
+    [plugins]="options.plugins"
+    [firstDay]="options.firstDay"
+    [eventLimit]="options.eventLimit"
     (dateClick)="dateClick($event)"
     (eventDragStop)="eventDragStop($event)"
-    [plugins]="options.plugins"
     (eventClick)="eventClick($event)"
   ></full-calendar>
 </ion-content>
