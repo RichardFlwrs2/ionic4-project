@@ -4,8 +4,6 @@ import { TareasService } from "./tareas.service";
 import { TaskService } from "src/app/services/api/tasks.service";
 
 import { OptionsInput } from "@fullcalendar/core";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
 import { FullCalendarComponent } from "@fullcalendar/angular";
 
 @Component({
@@ -16,38 +14,19 @@ import { FullCalendarComponent } from "@fullcalendar/angular";
 export class TareasPage implements OnInit {
   session = this._sts.loadSessionData();
   tareas: any[] = [];
-
-  calendarOptions;
+  options: OptionsInput;
+  eventsModel: any;
 
   constructor(private _sts: StorageService, private _tareaCtrl: TareasService, private _taskS: TaskService) {}
 
-  options: OptionsInput;
-  eventsModel: any;
   @ViewChild("fullcalendar") fullcalendar: FullCalendarComponent;
+
   ngOnInit() {
     this._taskS.getTaskByIdUser(this.session.idUsuario).subscribe((res: any) => {
       console.log(res);
       this.tareas = res;
       this.options = this._tareaCtrl.getCalendarOptions(res);
     });
-
-    // this.options = {
-    //   editable: true,
-    //   customButtons: {
-    //     myCustomButton: {
-    //       text: "custom!",
-    //       click: function() {
-    //         alert("clicked the custom button!");
-    //       }
-    //     }
-    //   },
-    //   header: {
-    //     left: "prev,next today myCustomButton",
-    //     center: "title",
-    //     right: "dayGridMonth"
-    //   },
-    //   plugins: [dayGridPlugin, interactionPlugin]
-    // };
   }
   eventClick(model) {
     console.log(model);

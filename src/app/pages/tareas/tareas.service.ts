@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import { OptionsInput } from "@fullcalendar/core";
 
 @Injectable({ providedIn: "root" })
 export class TareasService {
@@ -11,7 +12,7 @@ export class TareasService {
   // ---------------------------------------------------------------------------------------------------------------- //
   // * ---| GET CALENDAR OPTIONS
   // ---------------------------------------------------------------------------------------------------------------- //
-  getCalendarOptions(data: any[]) {
+  getCalendarOptions(data: any[]): OptionsInput {
     //
 
     const initialLocale = "es";
@@ -21,7 +22,7 @@ export class TareasService {
       eventLimit: 2,
       views: {
         agenda: {
-          eventLimit: 6 // adjust to 6 only for agendaWeek/agendaDay
+          eventLimit: 3 // adjust to 6 only for agendaWeek/agendaDay
         }
       },
       header: {
@@ -35,13 +36,13 @@ export class TareasService {
         week: "semana",
         day: "día"
       },
-      height: 500,
-      aspectRatio: 1,
-      handleWindowResize: true,
+      height: "auto",
       locale: initialLocale,
+      timeZone: "America/Mexico_City",
       firstDay: 1,
-      events: data,
+      events: [],
       plugins: [dayGridPlugin, interactionPlugin]
+      // handleWindowResize: true,
     };
 
     //
