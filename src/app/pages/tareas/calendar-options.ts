@@ -3,7 +3,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { OptionsInput } from "@fullcalendar/core";
 
 export const calendarOptions: OptionsInput = {
-  eventLimit: 2,
+  eventLimit: 4,
   views: {
     agenda: {
       eventLimit: 3 // adjust to 6 only for agendaWeek/agendaDay
