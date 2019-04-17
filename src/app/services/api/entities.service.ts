@@ -5,9 +5,10 @@ import { Subject } from "rxjs/Subject";
 import { Contacto } from "../../interfaces/Contacto";
 import { ErrorsService } from "../messages/errors.service";
 import { map, catchError } from "rxjs/operators";
-import { IonToastService } from '../messages/ion-toast.service';
+import { IonToastService } from "../messages/ion-toast.service";
+import { StorageService } from "../auth/storage.service";
 
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class EntidadesService {
   private headers: HttpHeaders;
 
@@ -29,20 +30,8 @@ export class EntidadesService {
   updateEntities = new Subject<any>();
   checkEntitiesShared = new Subject<any>();
 
-  constructor(
-    private http: HttpClient,
-    private _err: ErrorsService,
-    private _msge: IonToastService
-  ) {
-    this.headers = new HttpHeaders().set(
-      "Authorization",
-      "Bearer " + localStorage.getItem("authToken")
-    );
-    this.headers.append("Content-Type", "application/json");
-    this.headers.append("Access-Control-Allow-Headers", "Content-Type");
-    this.headers.append("Access-Control-Allow-Methods", "POST");
-    this.headers.append("Access-Control-Allow-Origin", "*");
-    this.headers.append("Authorization", localStorage.getItem("authToken"));
+  constructor(private http: HttpClient, private _err: ErrorsService, private _msge: IonToastService, private _sts: StorageService) {
+    this.headers = new HttpHeaders().set("Authorization", "Bearer " + this._sts.token);
   }
 
   // ---------------------------------------------------------------------------------------------------------------- //

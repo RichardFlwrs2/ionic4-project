@@ -7,6 +7,7 @@ import { ErrorsService } from "../messages/errors.service";
 import { IonToastService } from "../messages/ion-toast.service";
 import { Task } from "../../models/Task.model";
 import { LoadingService } from "../tools/loading.service";
+import { StorageService } from "../auth/storage.service";
 
 @Injectable({ providedIn: "root" })
 export class TaskService {
@@ -19,12 +20,18 @@ export class TaskService {
   // Observer
   public observerParent = new Subject<any>();
 
-  constructor(private http: HttpClient, private _err: ErrorsService, private _msge: IonToastService, private _loading: LoadingService) {
-    this.headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("authToken"));
+  constructor(
+    private http: HttpClient,
+    private _err: ErrorsService,
+    private _msge: IonToastService,
+    private _loading: LoadingService,
+    private _sts: StorageService
+  ) {
+    this.headers = new HttpHeaders().set("Authorization", "Bearer " + this._sts.token);
   }
 
   getHeader(): HttpHeaders {
-    return new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("authToken"));
+    return new HttpHeaders().set("Authorization", "Bearer " + this._sts.token);
   }
 
   // ---------------------------------------------------------------------------------------------------------------- //

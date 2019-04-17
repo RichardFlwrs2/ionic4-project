@@ -5,6 +5,7 @@ import { ErrorsService } from "../messages/errors.service";
 import { map, catchError } from "rxjs/operators";
 import { SessionService } from "../auth/session.service";
 import { LoadingService } from "../tools/loading.service";
+import { StorageService } from "../auth/storage.service";
 
 @Injectable({
   providedIn: "root"
@@ -13,7 +14,13 @@ export class LogginService {
   private basePath = environment.api;
   private headers;
 
-  constructor(private http: HttpClient, private _err: ErrorsService, private _loading: LoadingService, private _session: SessionService) {
+  constructor(
+    private http: HttpClient,
+    private _err: ErrorsService,
+    private _loading: LoadingService,
+    private _session: SessionService,
+    private _sts: StorageService
+  ) {
     this.headers = new HttpHeaders();
   }
 
@@ -61,7 +68,7 @@ export class LogginService {
   }
 
   logOut() {
-    const headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("authToken"));
+    const headers = new HttpHeaders().set("Authorization", "Bearer " + this._sts.token);
     this._loading.trigger.next(true);
 
     return this.http

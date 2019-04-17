@@ -11,6 +11,7 @@ import { ErrorsService } from "../messages/errors.service";
 import { IonToastService } from "../messages/ion-toast.service";
 import { ImgFilterService } from "../tools/img-filter.service";
 import { LoadingService } from "../tools/loading.service";
+import { StorageService } from "../auth/storage.service";
 
 @Injectable({ providedIn: "root" })
 export class UsuariosService {
@@ -25,13 +26,10 @@ export class UsuariosService {
     private _err: ErrorsService,
     private _msge: IonToastService,
     private _img: ImgFilterService,
-    private _loading: LoadingService
+    private _loading: LoadingService,
+    private _sts: StorageService
   ) {
-    this.headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("authToken"));
-    this.headers.append("Content-Type", "application/json");
-    this.headers.append("Access-Control-Allow-Headers", "Content-Type");
-    this.headers.append("Access-Control-Allow-Methods", "POST");
-    this.headers.append("Access-Control-Allow-Origin", "*");
+    this.headers = new HttpHeaders().set("Authorization", "Bearer " + this._sts.token);
   }
 
   // ---------------------------------------------------------------------------------------------------------------- //

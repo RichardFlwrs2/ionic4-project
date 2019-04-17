@@ -6,6 +6,7 @@ import { map, catchError } from "rxjs/operators";
 import { ErrorsService } from "../messages/errors.service";
 import { IonToastService } from "../messages/ion-toast.service";
 import { LoadingService } from "../tools/loading.service";
+import { StorageService } from "../auth/storage.service";
 
 @Injectable({ providedIn: "root" })
 export class SurveyService {
@@ -15,8 +16,14 @@ export class SurveyService {
   private basePath = environment.api;
   updateSurveys = new Subject<any>();
 
-  constructor(private http: HttpClient, private _err: ErrorsService, private _msge: IonToastService, private _loading: LoadingService) {
-    this.headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("authToken"));
+  constructor(
+    private http: HttpClient,
+    private _err: ErrorsService,
+    private _msge: IonToastService,
+    private _loading: LoadingService,
+    private _sts: StorageService
+  ) {
+    this.headers = new HttpHeaders().set("Authorization", "Bearer " + this._sts.token);
   }
 
   // ---------------------------------------------------------------------------------------------------------------- //
