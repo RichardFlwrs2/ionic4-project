@@ -747,18 +747,6 @@ Lots taken from Flatly (MIT): https://bootswatch.com/4/flatly/bootstrap.css
 //   -webkit-box-shadow: 0 0 0 0.2rem rgba(76, 91, 106, 0.5);
 //   box-shadow: 0 0 0 0.2rem rgba(76, 91, 106, 0.5); }
 
-.fc-button-primary {
-  background-color: var(--ion-color-primary);
-  border-color: white;
-  outline: none !important;
-  box-shadow: none;
-  color: white;
-
-  &:active {
-    background-color: var(--ion-color-primary-shade);
-  }
-}
-
 /* icons within buttons */
 .fc-button .fc-icon {
   vertical-align: middle;

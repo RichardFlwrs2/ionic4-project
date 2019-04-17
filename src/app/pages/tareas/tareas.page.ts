@@ -7,6 +7,7 @@ import { OptionsInput } from "@fullcalendar/core";
 import { FullCalendarComponent } from "@fullcalendar/angular";
 import { calendarOptions } from "./calendar-options";
 import { TaskCatalog } from "src/app/Interfaces/Task.interface";
+import { IonSegment } from "@ionic/angular";
 
 @Component({
   selector: "app-tareas",
@@ -21,6 +22,8 @@ export class TareasPage implements OnInit {
   tareas: any[] = [];
   options: OptionsInput = calendarOptions;
 
+  @ViewChild(IonSegment) segment: IonSegment;
+
   constructor(private _sts: StorageService, private _tareaCtrl: TareasService, private _taskS: TaskService) {}
 
   // ---------------------------------------------------------------------------------------------------------------- //
@@ -28,11 +31,18 @@ export class TareasPage implements OnInit {
   // ---------------------------------------------------------------------------------------------------------------- //
   @ViewChild("fullcalendar") fullcalendar: FullCalendarComponent;
   ngOnInit() {
+    this.segment.value = "calendario";
+
     this._taskS.getTaskByIdUser(this.session.idUsuario).subscribe((res: any) => {
       console.log(res);
       this.tareas = this.fillEvents(res);
       // this.options = this._tareaCtrl.getCalendarOptions(res);
     });
+  }
+
+  segmentChanged(event: any) {
+    const value = event.detail.value;
+    // console.log(value);
   }
 
   // ---------------------------------------------------------------------------------------------------------------- //
@@ -58,7 +68,7 @@ export class TareasPage implements OnInit {
           title: _t.title + (_t.iduser == null ? "" : " - " + _t.username),
           start: _t.startDate,
           end: _t.endDate,
-          color: null,
+          color: "var(--ion-color-primary)",
           userId: _t.iduser
         });
       });

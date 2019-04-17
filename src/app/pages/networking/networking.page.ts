@@ -44,6 +44,6 @@ export class NetworkingPage implements OnInit {
 
   segmentChanged(event: any) {
     const value = event.detail.value;
-    console.log(value);
+    // console.log(value);
   }
 }

@@ -1,22 +1,44 @@
 <app-header></app-header>
 
 <ion-content padding>
-  <!-- <p>Tareas</p> -->
-  <full-calendar
-    *ngIf="options"
-    #fullcalendar
-    [locale]="options.locale"
-    [editable]="true"
-    [events]="tareas"
-    [height]="options.height"
-    [buttonText]="options.buttonText"
-    [timeZone]="options.timeZone"
-    [header]="options.header"
-    [plugins]="options.plugins"
-    [firstDay]="options.firstDay"
-    [eventLimit]="options.eventLimit"
-    (dateClick)="dateClick($event)"
-    (eventDragStop)="eventDragStop($event)"
-    (eventClick)="eventClick($event)"
-  ></full-calendar>
+  <!-- Default Segment -->
+  <ion-segment class="mb-2rem" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="calendario">
+      <ion-label>Calendario</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="agenda">
+      <ion-label>Agenda</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+
+  <!-- ---------------------------------------------------------------------------------------------- -->
+  <!-- - CALENDARIO -->
+  <!-- ---------------------------------------------------------------------------------------------- -->
+  <div *ngIf="segment.value === 'calendario'">
+    <full-calendar
+      *ngIf="options"
+      #fullcalendar
+      [locale]="options.locale"
+      [editable]="true"
+      [events]="tareas"
+      [height]="options.height"
+      [buttonText]="options.buttonText"
+      [timeZone]="options.timeZone"
+      [header]="options.header"
+      [plugins]="options.plugins"
+      [firstDay]="options.firstDay"
+      [eventLimit]="options.eventLimit"
+      (dateClick)="dateClick($event)"
+      (eventDragStop)="eventDragStop($event)"
+      (eventClick)="eventClick($event)"
+    ></full-calendar>
+  </div>
+
+  <!-- ---------------------------------------------------------------------------------------------- -->
+  <!-- - AGENDA -->
+  <!-- ---------------------------------------------------------------------------------------------- -->
+  <div *ngIf="segment.value === 'agenda'">
+    <p>Agenda works</p>
+  </div>
 </ion-content>

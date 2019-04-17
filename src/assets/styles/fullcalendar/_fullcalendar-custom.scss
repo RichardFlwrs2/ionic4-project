@@ -1,0 +1,32 @@
+.fc-button-primary {
+  background-color: var(--ion-color-primary);
+  border-color: white;
+  outline: none !important;
+  box-shadow: none;
+  color: white;
+
+  &:active {
+    background-color: var(--ion-color-primary-shade);
+  }
+}
+
+.fc-center {
+  h2 {
+    text-transform: capitalize;
+  }
+}
+
+@media (max-width: 375px) {
+  .fc-center {
+    h2 {
+      font-size: 1.3em;
+    }
+  }
+}
+
+.fc-day-header {
+  span {
+    color: var(--ion-color-dark);
+    font-weight: initial;
+  }
+}
