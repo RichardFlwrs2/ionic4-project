@@ -10,16 +10,24 @@
   }
 }
 
-.fc-center {
+.fc-right {
   h2 {
     text-transform: capitalize;
   }
 }
 
 @media (max-width: 375px) {
-  .fc-center {
+  .fc-right {
     h2 {
       font-size: 1.3em;
+    }
+  }
+}
+
+@media (max-width: 325px) {
+  .fc-right {
+    h2 {
+      font-size: 1em;
     }
   }
 }

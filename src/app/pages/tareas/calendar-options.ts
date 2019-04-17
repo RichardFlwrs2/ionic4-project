@@ -11,8 +11,8 @@ export const calendarOptions: OptionsInput = {
   },
   header: {
     left: "prev,next today",
-    center: "title",
-    right: "month,agendaWeek,agendaDay"
+    // center: "title",
+    right: "title"
   },
   buttonText: {
     today: "Hoy",
