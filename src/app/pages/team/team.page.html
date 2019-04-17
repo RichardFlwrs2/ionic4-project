@@ -7,7 +7,13 @@
         <ion-label>Label</ion-label>
       </ion-item-divider> -->
 
-      <app-info-row [entity]="user" iconLeft="md-person" iconRight="call" iconRightColor="success" ></app-info-row>
+      <app-info-row
+        [entity]="user"
+        iconLeft="md-person"
+        iconRight="call"
+        iconRightColor="success"
+        (startIconEmmiter)="goToDetail($event)"
+      ></app-info-row>
     </div>
   </ion-list>
 

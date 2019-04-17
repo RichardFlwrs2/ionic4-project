@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router, private _sts: StorageService, private ngZone: NgZone) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (this._sts.isAuthenticated()) {
+    if (this._sts.session && this._sts.token) {
       this.loggedIn.next(true);
       return true;
     } else {

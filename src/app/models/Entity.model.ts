@@ -78,7 +78,7 @@ export class Entity {
   // * ----------------------------------------------------------------------------------------------------------------- //
   // * - GETS
   // * ----------------------------------------------------------------------------------------------------------------- //
-  get_formBuild() {
+  public get_formBuild() {
     // common properties
     const _FORM: any = {
       nombre: this.nombre
@@ -122,7 +122,7 @@ export class Entity {
     return _FORM;
   }
 
-  get_httpBuild() {
+  public get_httpBuild() {
     switch (this.tipoEntidad) {
       case "USUARIO":
         return {
@@ -181,7 +181,7 @@ export class Entity {
   // * - SETS
   // * ----------------------------------------------------------------------------------------------------------------- //
 
-  setNewData(data) {
+  public setNewData(data) {
     const props = Object.keys(this);
     for (const i in props) {
       if (data[props[i]]) {

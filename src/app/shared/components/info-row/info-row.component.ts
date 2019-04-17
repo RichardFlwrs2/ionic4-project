@@ -12,8 +12,8 @@ export class InfoRowComponent implements OnInit {
   @Input() iconRight: string;
   @Input() iconRightColor: string;
 
-  @Output() endIconEmmiter = new EventEmitter<any>();
   @Output() startIconEmmiter = new EventEmitter<any>();
+  @Output() endIconEmmiter = new EventEmitter<any>();
 
   constructor() {}
 

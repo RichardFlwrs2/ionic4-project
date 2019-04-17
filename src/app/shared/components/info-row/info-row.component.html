@@ -11,7 +11,7 @@
     [name]="iconLeft"
   ></ion-icon>
 
-  <ion-label>
+  <ion-label (click)="startIconEmmiter.emit(entity)" >
     <h2>{{ entity.nombre }}</h2>
     <p>{{ entity.telefonos }}</p>
   </ion-label>

@@ -40,8 +40,12 @@ export class StorageService {
     this.localStorageService.setItem("authToken", token);
   }
 
-  public isAuthenticated(): boolean {
-    return this.session != null && this.loadAuthToken() != null ? true : false;
+  setPictureSession(picture) {
+    const SESSION = this.session;
+
+    SESSION.picture = picture;
+
+    this.setCurrentSession(SESSION);
   }
 
   removeCurrentSession(): void {

@@ -1,0 +1,28 @@
+<ion-header no-border class="border-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/team"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title slot="end">{{ _detalleS.Entity.nombre }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Default Segment -->
+  <ion-segment class="mb-2rem" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="info">
+      <ion-label>Informacion</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="adjuntos">
+      <ion-label>Adjuntos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="notas">
+      <ion-label>Notas</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="segment.value === 'info'">
+    <app-info-card></app-info-card>
+  </div>
+</ion-content>

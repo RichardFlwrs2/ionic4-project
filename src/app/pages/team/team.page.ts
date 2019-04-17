@@ -5,6 +5,7 @@ import { StorageService } from "src/app/services/auth/storage.service";
 import { UsuarioGpList } from "src/app/interfaces/Usuario";
 import { NuevaEntidadComponent } from "src/app/shared/components/nueva-entidad/nueva-entidad.component";
 import { ModalController } from "@ionic/angular";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-team",
@@ -14,7 +15,7 @@ import { ModalController } from "@ionic/angular";
 export class TeamPage implements OnInit {
   users: UsuarioGpList[] = [];
 
-  constructor(private _users: UsuariosService, private _sts: StorageService, private modalCtrl: ModalController) {
+  constructor(private _users: UsuariosService, private _sts: StorageService, private modalCtrl: ModalController, private router: Router) {
     this._users.getUsersByOwner(this._sts.session.idUsuario).subscribe(res => {
       console.log(res);
       this.users = res;
@@ -31,6 +32,11 @@ export class TeamPage implements OnInit {
     });
 
     await modal.present();
+  }
+
+  goToDetail(user: UsuarioGpList) {
+    console.log(user);
+    this.router.navigate(["/tabs/detalle/usuario/", user.idUsuario]);
   }
 
   ngOnInit() {}

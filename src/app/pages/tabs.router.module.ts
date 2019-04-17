@@ -49,6 +49,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: "detalle/:tipo/:id",
+        children: [
+          {
+            path: "",
+            loadChildren: "./detalle/detalle.module#DetallePageModule"
+          }
+        ]
+      },
+      {
         path: "",
         redirectTo: "/tabs/tareas",
         pathMatch: "full"
