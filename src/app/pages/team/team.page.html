@@ -7,7 +7,7 @@
         <ion-label>Label</ion-label>
       </ion-item-divider> -->
 
-      <app-info-row [entity]="user" iconLeft="md-person" iconRight="call"></app-info-row>
+      <app-info-row [entity]="user" iconLeft="md-person" iconRight="call" iconRightColor="success" ></app-info-row>
     </div>
   </ion-list>
 
@@ -18,7 +18,10 @@
 
     <ion-fab-list side="top">
       <ion-fab-button><ion-icon name="person-add" (click)="openModal()"></ion-icon></ion-fab-button>
+      <ion-label>Nuevo usuario</ion-label>
+
       <ion-fab-button><ion-icon name="people"></ion-icon></ion-fab-button>
+      <ion-label>Nuevo grupo</ion-label>
     </ion-fab-list>
   </ion-fab>
 </ion-content>

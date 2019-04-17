@@ -10,6 +10,7 @@ export class InfoRowComponent implements OnInit {
   @Input() entity: any;
   @Input() iconLeft: string = "md-person";
   @Input() iconRight: string;
+  @Input() iconRightColor: string;
 
   @Output() endIconEmmiter = new EventEmitter<any>();
   @Output() startIconEmmiter = new EventEmitter<any>();

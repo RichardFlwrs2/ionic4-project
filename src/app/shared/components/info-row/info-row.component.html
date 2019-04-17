@@ -16,5 +16,5 @@
     <p>{{ entity.telefonos }}</p>
   </ion-label>
 
-  <ion-icon *ngIf="iconRight" slot="end" (click)="endIconEmmiter.emit(entity)" [name]="iconRight"></ion-icon>
+  <ion-icon *ngIf="iconRight" slot="end" [color]="iconRightColor" (click)="endIconEmmiter.emit(entity)" [name]="iconRight"></ion-icon>
 </ion-item>

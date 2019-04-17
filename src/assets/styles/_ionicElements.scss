@@ -8,6 +8,32 @@
   }
 }
 
+ion-fab-button {
+  margin-left: 140px;
+  overflow: visible;
+  position: relative;
+}
+ion-fab-list {
+  ion-label {
+    position: relative;
+    top: 45px;
+    right: 20px;
+    color: #00000099;
+    line-height: 24px;
+    font-weight: 100;
+    padding: 4px 8px;
+    border-radius: 4px;
+    /* background-color: rgba(0, 0, 0, 0.7); */
+  }
+}
+ion-fab {
+  ion-badge {
+    position: relative;
+    top: 10px;
+    left: 140px;
+  }
+}
+
 // ------------------------
 // - ION BUTTON
 // ------------------------

@@ -13,7 +13,7 @@
 
   <div *ngIf="segment.value === 'contacts'">
     <div *ngFor="let c of contacts">
-      <app-info-row [entity]="c"></app-info-row>
+      <app-info-row [entity]="c" iconRight="call" iconRightColor="success"></app-info-row>
     </div>
   </div>
 
@@ -30,7 +30,10 @@
 
     <ion-fab-list side="top">
       <ion-fab-button class="relative"> <ion-icon name="person-add"></ion-icon></ion-fab-button>
+      <ion-label>Nuevo contacto</ion-label>
+
       <ion-fab-button><ion-icon name="people"></ion-icon></ion-fab-button>
+      <ion-label>Nueva empresa</ion-label>
     </ion-fab-list>
   </ion-fab>
 </ion-content>
